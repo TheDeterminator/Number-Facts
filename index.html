@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <style>
+        a {
+            color: 'green';
+        }
+        .box {
+            width: 300px;
+        }
+    </style>
+    <title>Number Facts</title>
+</head>
+<body class="container bg-dark">
+    <section class="bg-danger mx-auto my-3 box p-3">
+        <h1 class="text-white">Number Facts</h1>
+        <form class="form-group">
+            <input class="form-control number-input" type="text" placeholder="Enter a number...."/>
+            <div class="form-check">
+                    <input class="form-check-input" type="radio" value="" name="num-type" id="triviaCheck" checked>
+                    <label class="form-check-label" for="triviaCheck">
+                      Trivia
+                    </label>
+            </div>
+            <div class="form-check">
+                    <input class="form-check-input" type="radio" value="math" name="num-type" id="mathCheck">
+                    <label class="form-check-label" for="mathCheck">
+                      Math
+                    </label>
+            </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="date" name="num-type" id="dateCheck">
+                    <label class="form-check-label" for="dateCheck">
+                      Date
+                    </label>
+            </div>
+            </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="year" name="num-type" id="yearCheck">
+                    <label class="form-check-label" for="yearCheck">
+                      Year
+                    </label>
+            </div>
+        </form>
+        <div class="fact card-body">
+            <h4 class="cart-title">Number fact</h4>
+            <p class="card-text" id="fact-text"></p>
+        </div>
+    </section>
+
+    <script>
+        input = document.querySelector(".number-input")
+        input.addEventListener("input", getNumberFact)
+
+        function getNumberFact() {
+            const number = document.querySelector('.number-input').value.replace(/[^\d]/g, '')
+            const type = document.querySelector('input[name=num-type]:checked').value
+            fetch(`http://numbersapi.com/${number}/${type}`)
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.fact').style.display = 'block'
+                document.querySelector('#fact-text').innerHTML = data
+            })
+            .catch(err => console.log(err))
+            }
+    </script>
+</body>
+</html>
